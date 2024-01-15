@@ -1,0 +1,49 @@
+{
+	"name": "Refresh Token Demo",
+	"workspaceFolder": "/workspace",
+	"service": "app",
+	"initializeCommand": "./.devcontainer/initializeCommand.sh",
+	"dockerComposeFile": "docker-compose.yml",
+	"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"GitHub.copilot-chat",
+				"GitHub.copilot",
+				"eamodio.gitlens",
+				"ms-azuretools.vscode-docker",
+				"EditorConfig.EditorConfig"
+			],
+			"settings": {
+				"terminal.integrated.shell.osx": "/bin/zsh",
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"editor.formatOnSave": true,
+				"files.autoSave": "afterDelay",
+				"files.autoSaveDelay": 1000,
+				"editor.codeActionsOnSave": {
+					"source.organizeImports": true
+				}
+			}
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "20.11.0"
+		},
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"configureZshAsDefaultShell": "true",
+			"username": "vscode",
+			"userUid": "1000",
+			"userGid": "1000"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": "false"
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	},
+	"remoteUser": "vscode"
+}
