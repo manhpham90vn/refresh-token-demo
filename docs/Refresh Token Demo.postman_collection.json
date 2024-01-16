@@ -11,6 +11,26 @@
 			"item": [
 				{
 					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token.access.token);",
+									"postman.setEnvironmentVariable(\"refreshToken\", jsonData.token.refresh.token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -46,6 +66,13 @@
 									"postman.setEnvironmentVariable(\"token\", jsonData.token.access.token);",
 									"postman.setEnvironmentVariable(\"refreshToken\", jsonData.token.refresh.token);"
 								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
 								"type": "text/javascript"
 							}
 						}

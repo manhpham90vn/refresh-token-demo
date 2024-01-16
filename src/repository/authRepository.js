@@ -23,8 +23,11 @@ const createUser = async (userData) => {
 const login = async (userData) => {
 	const { email, password } = userData
 	const user = await prisma.user.findFirst({ where: { email } })
+	if (!user) {
+		throw new ApiError(StatusCodes.UNAUTHORIZED, 'Incorrect email or password')
+	}
 	const isPasswordMatch = await bcrypt.compare(password, user.password)
-	if (!user || !isPasswordMatch) {
+	if (!isPasswordMatch) {
 		throw new ApiError(StatusCodes.UNAUTHORIZED, 'Incorrect email or password')
 	}
 	delete user.password
