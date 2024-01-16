@@ -4,6 +4,8 @@ import {
 	JWT_SECRET
 } from '@/config/constants'
 import prisma from '@/config/database'
+import ApiError from '@/utils/ApiError'
+import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 
@@ -52,6 +54,30 @@ const generateAuthTokens = async (user) => {
 	}
 }
 
+const refreshToken = async (refreshToken) => {
+	try {
+		const payload = jwt.verify(refreshToken, JWT_SECRET)
+		const token = await prisma.token.findFirst({
+			where: {
+				token: refreshToken,
+				type: tokenTypes.REFRESH,
+				userId: payload.sub
+			}
+		})
+		if (!token) {
+			throw new Error('Token not found')
+		}
+		const user = await prisma.user.findFirst({ where: { id: payload.sub } })
+		if (!user) {
+			throw new Error('User not found')
+		}
+		await prisma.token.delete({ where: { id: token.id } })
+		return generateAuthTokens(user)
+	} catch (error) {
+		throw new ApiError(StatusCodes.UNAUTHORIZED, 'Please authenticate')
+	}
+}
+
 const generateToken = (userId, expires, type) => {
 	const payload = {
 		sub: userId,
@@ -75,6 +101,7 @@ const saveToken = async (refreshToken, userId, expires, type) => {
 }
 
 export const tokenRepository = {
+	tokenTypes,
 	generateAuthTokens,
-	tokenTypes
+	refreshToken
 }

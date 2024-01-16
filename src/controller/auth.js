@@ -20,8 +20,14 @@ const logout = catchAsync(async (req, res) => {
 	res.status(StatusCodes.OK).send({ success: true })
 })
 
+const refreshToken = catchAsync(async (req, res) => {
+	const tokens = await tokenRepository.refreshToken(req.body.refreshToken)
+	res.status(StatusCodes.OK).send({ success: true, token: tokens })
+})
+
 export const authController = {
 	register,
 	login,
-	logout
+	logout,
+	refreshToken
 }
