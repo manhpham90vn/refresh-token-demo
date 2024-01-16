@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/devcontainers/base:ubuntu-22.04
     container_name: refresh_token_demo_app
     restart: always
-    command: sleep infinity  
+    command: sleep infinity
     volumes:
       - ../:/workspace
       - ~/.ssh:/home/vscode/.ssh:cached
@@ -19,6 +19,8 @@ services:
     image: mysql:8.0.34
     container_name: refresh_token_demo_database
     restart: always
+    ports:
+      - "3306:3306"
     env_file:
       - .env
     environment:
@@ -35,6 +37,8 @@ services:
     image: phpmyadmin/phpmyadmin:5.2.1
     container_name: refresh_token_demo_database_phpmyadmin
     restart: always
+    ports:
+      - "8080:80"
     environment:
       PMA_HOST: database
       PMA_PORT: 3306
