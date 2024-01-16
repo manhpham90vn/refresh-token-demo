@@ -16,6 +16,7 @@ const validate = (schema) => (req, res, next) => {
 			.join(', ')
 		return next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, errorMessage))
 	}
+
 	Object.assign(req, value)
 	return next()
 }

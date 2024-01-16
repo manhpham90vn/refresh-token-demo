@@ -1,8 +1,9 @@
 import prisma from '@/config/database'
 import authRouter from '@/route/v1/authRouter'
+import postRouter from '@/route/v1/postRouter'
+import userRouter from '@/route/v1/userRouter'
 import express from 'express'
 import StatusCodes from 'http-status-codes'
-import userRouter from './userRouter'
 
 const router = express.Router()
 
@@ -14,6 +15,8 @@ router.get('/health', async (req, res) => {
 router.use('/auth', authRouter)
 
 router.use('/user', userRouter)
+
+router.use('/post', postRouter)
 
 const APIs_V1 = router
 
